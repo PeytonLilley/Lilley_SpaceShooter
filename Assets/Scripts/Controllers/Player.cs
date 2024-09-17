@@ -20,19 +20,19 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position = transform.position + (Vector3.left * speed);
+            transform.position = transform.position + (Vector3.left * speed) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            transform.position = transform.position + (Vector3.up * speed);
+            transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            transform.position = transform.position + (Vector3.right * speed);
+            transform.position = transform.position + (Vector3.right * speed) * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            transform.position = transform.position + (Vector3.down * speed);   // multiplied by speed variable to change speed of movement
+            transform.position = transform.position + (Vector3.down * speed) * Time.deltaTime;   // multiplied by speed variable to change speed of movement and Time.deltaTime to avoid frame rate issues
         }
     }
 
