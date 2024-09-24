@@ -10,8 +10,17 @@ public class Player : MonoBehaviour
     public Transform bombsTransform;
 
     public float speed = 0.05f;   // added a public speed variable to be able to change the speed from the inspector
+    public float accel = 0;
+    public float accelSpeed = 0.017f;
+    public float maxAccel = 0.2f;
+
 
     void Update()
+    {
+        
+        
+    }
+    private void FixedUpdate()
     {
         PlayerMovement();
     }
@@ -20,20 +29,62 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            transform.position = transform.position + (Vector3.left * speed) * Time.deltaTime;
+            accel = accel + accelSpeed;
+            
+            transform.position = transform.position + (Vector3.left * speed * accel) * Time.deltaTime;
+            if (accel >=  maxAccel)
+            {
+                accel = maxAccel;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            accel = 0;
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
+            accel = accel + accelSpeed;
+
             transform.position = transform.position + (Vector3.up * speed) * Time.deltaTime;
+            if (accel >= maxAccel)
+            {
+                accel = maxAccel;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            accel = 0;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
+            accel = accel + accelSpeed;
+
             transform.position = transform.position + (Vector3.right * speed) * Time.deltaTime;
+            if (accel >= maxAccel)
+            {
+                accel = maxAccel;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            accel = 0;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
+            accel = accel + accelSpeed;
+
             transform.position = transform.position + (Vector3.down * speed) * Time.deltaTime;   // multiplied by speed variable to change speed of movement and Time.deltaTime to avoid frame rate issues
+            if (accel >= maxAccel)
+            {
+                accel = maxAccel;
+            }
         }
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            accel = 0;
+        }
+
+
     }
 
 }
