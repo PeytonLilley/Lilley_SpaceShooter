@@ -39,7 +39,11 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.LeftArrow))
         {
-            accel = 0;
+            accel = accel - accelSpeed;
+            if (accel <= 0)
+            {
+                accel = 0;
+            }
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
@@ -53,7 +57,11 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.UpArrow))
         {
-            accel = 0;
+            accel = accel - accelSpeed;
+            if (accel <= 0)
+            {
+                accel = 0;
+            }
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -67,7 +75,11 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.RightArrow))
         {
-            accel = 0;
+            accel = accel - accelSpeed;
+            if (accel <= 0)
+            {
+                accel = 0;
+            }
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -81,7 +93,11 @@ public class Player : MonoBehaviour
         }
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            accel = 0;
+            accel = accel - accelSpeed;
+            if (accel <= 0)
+            {
+                accel = 0;
+            }
         }
 
 
