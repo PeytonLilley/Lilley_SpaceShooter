@@ -8,21 +8,55 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
+    public Transform playerTransform;
 
     public float speed = 0.05f;   // added a public speed variable to be able to change the speed from the inspector
     public float accel = 0;
     public float accelSpeed = 0.017f;
     public float maxAccel = 0.2f;
 
+    public float radius;
+    public int circlePoints;
+    public float circleAngle;
 
     void Update()
     {
-        
+        EnemyRadar(radius, circlePoints);
         
     }
     private void FixedUpdate()
     {
         PlayerMovement();
+    }
+
+    public void EnemyRadar(float radius, int circlePoints)
+    {
+        radius = 2;
+        circlePoints = 8;
+        circleAngle = (2 * Mathf.PI) / circlePoints;
+        Vector3 lineStart = new Vector3(playerTransform.position.x, playerTransform.position.y);
+        Vector3 lineEnd = new Vector3(playerTransform.position.x, playerTransform.position.y);
+
+        for (int i = 0; i < circlePoints; i++)
+        {
+            // Line start is defined as starting angle of the current segment (i)
+            lineStart.x = playerTransform.position.x + Mathf.Cos(circleAngle * i);
+            lineStart.y = playerTransform.position.y + Mathf.Sin(circleAngle * i);
+
+            // Line end is defined by the angle of the next segment (i+1)
+            lineEnd.x = playerTransform.position.x + Mathf.Cos(circleAngle * (i + 1));
+            lineEnd.y = playerTransform.position.y + Mathf.Sin(circleAngle * (i + 1));
+            
+            float shipsDistance = Vector3.Distance(playerTransform.position, enemyTransform.position);
+            if (shipsDistance <= radius)
+            {
+                Debug.DrawLine(lineStart, lineEnd, Color.red);
+            }
+            else
+            {
+                Debug.DrawLine(lineStart, lineEnd, Color.green);
+            }
+        }
     }
 
     void PlayerMovement()   // added an if statement for each direction, now it moves 1 in each direction depending on the key pressed
