@@ -19,14 +19,35 @@ public class Player : MonoBehaviour
     public int circlePoints;
     public float circleAngle;
 
+    public int numberOfPowerups;
+    public GameObject powerupPrefab;
+
     void Update()
     {
         EnemyRadar(radius, circlePoints);
-        
+        SpawnPowerups(radius, numberOfPowerups);
     }
     private void FixedUpdate()
     {
         PlayerMovement();
+    }
+
+    public void SpawnPowerups(float radius, int numberOfPowerups)
+    {
+        numberOfPowerups = 5;
+        radius = 2;
+        circleAngle = (2 * Mathf.PI) / numberOfPowerups;
+        Vector3 powerupPos = new Vector3(playerTransform.position.x, playerTransform.position.y);
+
+        for (int i = 0; i < numberOfPowerups; i++)
+        {
+            Instantiate(powerupPrefab, new Vector3(playerTransform.position.x + radius * circleAngle * i, playerTransform.position.y + radius * circleAngle * i), Quaternion.identity);
+
+            
+            powerupPos.x = playerTransform.position.x + Mathf.Cos(circleAngle * i);
+            powerupPos.y = playerTransform.position.y + Mathf.Sin(circleAngle * i);
+  //          Instantiate(powerupPrefab, new Vector3(powerupPos.x, powerupPos.y, Quaternion.identity);
+        }
     }
 
     public void EnemyRadar(float radius, int circlePoints)
@@ -39,11 +60,9 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < circlePoints; i++)
         {
-            // Line start is defined as starting angle of the current segment (i)
             lineStart.x = playerTransform.position.x + Mathf.Cos(circleAngle * i);
             lineStart.y = playerTransform.position.y + Mathf.Sin(circleAngle * i);
 
-            // Line end is defined by the angle of the next segment (i+1)
             lineEnd.x = playerTransform.position.x + Mathf.Cos(circleAngle * (i + 1));
             lineEnd.y = playerTransform.position.y + Mathf.Sin(circleAngle * (i + 1));
             
