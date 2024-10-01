@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetTransform: {fileID: 596075294928896946}
-  orbitRadius: 1.5
-  orbitSpeed: 60
+  radius: 1
+  speed: 10
 --- !u!1 &859344701623534545
 GameObject:
   m_ObjectHideFlags: 0
