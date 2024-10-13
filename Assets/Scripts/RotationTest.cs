@@ -4,30 +4,28 @@ using UnityEngine;
 
 public class RotationTest : MonoBehaviour
 {
-    public float AngularSpeed = 30f;
+    public float angularSpeed = 45f;
     public float targetAngle = 130f;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(transform.position, transform.up, Color.green);
-        float currentRotation = transform.rotation.eulerAngles.z + 90;
+        Debug.DrawLine(transform.position, transform.position + transform.up, Color.blue);
+        Debug.DrawLine(transform.position, transform.position + transform.right, Color.green);
         
-        Debug.Log(currentRotation);
-
-        if (currentRotation < targetAngle)
+        float currentRotation = transform.rotation.eulerAngles.z;
+        currentRotation = StandardizeAngle(currentRotation);
+        //Debug.Log($"<color=yellow><size=18>{currentRotation}</size></color>");
+        
+        if (targetAngle - currentRotation < 0)
         {
-            transform.Rotate(0, 0, AngularSpeed * Time.deltaTime);
+            if (currentRotation > targetAngle)
+                transform.Rotate(0, 0, -angularSpeed * Time.deltaTime);
         }
-        else if (currentRotation > targetAngle)
+        else
         {
-            transform.Rotate(0, 0, -AngularSpeed * Time.deltaTime);
+            if (currentRotation < targetAngle)
+                transform.Rotate(0, 0, angularSpeed * Time.deltaTime);
         }
     }
 
@@ -35,7 +33,7 @@ public class RotationTest : MonoBehaviour
     {
         inAngle %= 360;
 
-        if (inAngle >180)
+        if (inAngle > 180)
         {
             inAngle -= 360;
         }

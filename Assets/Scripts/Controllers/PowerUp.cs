@@ -11,18 +11,22 @@ public class PowerUp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PowerUpMagnet();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        PowerUpMagnet();
     }
 
     public void PowerUpMagnet()
     {
         float powerUpDistance = Vector3.Distance(playerTransform.position, powerUpTransform.position);
         Debug.Log(powerUpDistance);
+        if (powerUpDistance < 1.5)
+        {
+            Debug.Log("magnet");
+        }
     }
 }
