@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public Transform enemyTransform;
     public GameObject bombPrefab;
     public Transform bombsTransform;
+    public Transform playerTransform;
+    public Transform powerUpTransform;
 
     public float accelerationTime = 1f;
     public float decelerationTime = 1f;
@@ -19,6 +21,8 @@ public class Player : MonoBehaviour
     private Vector3 currentVelocity;
     private float maxSpeedSqr;
 
+    float powerUpScore = 0;
+
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
@@ -28,6 +32,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(powerUpScore);
         Vector3 moveDirection = Vector3.zero;
 
         if (Input.GetKey(KeyCode.W))
@@ -62,6 +67,13 @@ public class Player : MonoBehaviour
         }
 
         transform.position += currentVelocity * Time.deltaTime;
+    }
+
+   
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        powerUpScore = powerUpScore + 1;
     }
 
 }
