@@ -23,6 +23,8 @@ public class Player : MonoBehaviour
 
     float powerUpScore = 0;
 
+    float elapsedTime;
+
     private void Start()
     {
         acceleration = maxSpeed / accelerationTime;
@@ -71,9 +73,36 @@ public class Player : MonoBehaviour
 
    
 
-    public void OnTriggerEnter2D(Collider2D collider)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
-        powerUpScore = powerUpScore + 1;
+        if (collision.gameObject.tag == "powerup")
+        {
+            powerUpScore = powerUpScore + 1;
+        }
+        if (collision.gameObject.tag == "boosterRight")
+        {
+            //currentVelocity = Vector3.zero;
+            Debug.Log("boost");
+            //Booster();
+            currentVelocity = currentVelocity * 2;
+
+        }
+    }
+
+    public void Booster()
+    {
+        Vector3 endPosition = new Vector3(playerTransform.position.x + 3, playerTransform.position.y);
+        Vector3 startPosition = new Vector3(playerTransform.position.x, playerTransform.position.y);
+        float boostSpeed = 5f;
+
+        elapsedTime += Time.deltaTime;
+        float percentageComplete = (elapsedTime / boostSpeed);
+        playerTransform.position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+    }
+
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        
     }
 
 }
