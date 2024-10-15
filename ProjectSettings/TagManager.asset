@@ -6,6 +6,9 @@ TagManager:
   tags:
   - boosterRight
   - powerup
+  - boosterLeft
+  - boosterUp
+  - boosterDown
   layers:
   - Default
   - TransparentFX

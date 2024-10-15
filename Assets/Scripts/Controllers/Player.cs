@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class Player : MonoBehaviour
     public Transform bombsTransform;
     public Transform playerTransform;
     public Transform powerUpTransform;
+    public Transform targetRight;
+    public Transform targetLeft;
+    public Transform targetUp;
+    public Transform targetDown;
 
     public float accelerationTime = 1f;
     public float decelerationTime = 1f;
@@ -81,25 +86,97 @@ public class Player : MonoBehaviour
         }
         if (collision.gameObject.tag == "boosterRight")
         {
-            //currentVelocity = Vector3.zero;
+            currentVelocity = Vector3.zero;
             Debug.Log("boost");
-            //Booster();
-            currentVelocity = currentVelocity * 2;
-
+            BoosterRight();
+        }
+        if (collision.gameObject.tag == "boosterLeft")
+        {
+            currentVelocity = Vector3.zero;
+            Debug.Log("boost");
+            BoosterLeft();
+        }
+        if (collision.gameObject.tag == "boosterUp")
+        {
+            currentVelocity = Vector3.zero;
+            Debug.Log("boost");
+            BoosterUp();
+        }
+        if (collision.gameObject.tag == "boosterDown")
+        {
+            currentVelocity = Vector3.zero;
+            Debug.Log("boost");
+            BoosterDown();
         }
     }
 
-    public void Booster()
+    public void BoosterRight()
     {
-        Vector3 endPosition = new Vector3(playerTransform.position.x + 3, playerTransform.position.y);
+        Vector3 endPosition = new Vector3(playerTransform.position.x + 500, playerTransform.position.y);
         Vector3 startPosition = new Vector3(playerTransform.position.x, playerTransform.position.y);
-        float boostSpeed = 5f;
+        float boostSpeed = 3f;
+
+        elapsedTime = 0;
 
         elapsedTime += Time.deltaTime;
         float percentageComplete = (elapsedTime / boostSpeed);
         playerTransform.position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+
+        // rotate toward rotation of target object
+        var step = 360;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRight.rotation, step);
     }
 
+    public void BoosterLeft()
+    {
+        Vector3 endPosition = new Vector3(playerTransform.position.x - 500, playerTransform.position.y);
+        Vector3 startPosition = new Vector3(playerTransform.position.x, playerTransform.position.y);
+        float boostSpeed = 3f;
+
+        elapsedTime = 0;
+
+        elapsedTime += Time.deltaTime;
+        float percentageComplete = (elapsedTime / boostSpeed);
+        playerTransform.position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+
+        // rotate toward rotation of target object
+        var step = 360;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetLeft.rotation, step);
+    }
+
+    public void BoosterUp()
+    {
+        Vector3 endPosition = new Vector3(playerTransform.position.x, playerTransform.position.y + 500);
+        Vector3 startPosition = new Vector3(playerTransform.position.x, playerTransform.position.y);
+        float boostSpeed = 3f;
+
+        elapsedTime = 0;
+
+        elapsedTime += Time.deltaTime;
+        float percentageComplete = (elapsedTime / boostSpeed);
+        playerTransform.position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+
+        // rotate toward rotation of target object
+        var step = 360;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetUp.rotation, step);
+    }
+
+    public void BoosterDown()
+    {
+        Vector3 endPosition = new Vector3(playerTransform.position.x, playerTransform.position.y - 500);
+        Vector3 startPosition = new Vector3(playerTransform.position.x, playerTransform.position.y);
+        float boostSpeed = 3f;
+
+        elapsedTime = 0;
+
+        elapsedTime += Time.deltaTime;
+        float percentageComplete = (elapsedTime / boostSpeed);
+        playerTransform.position = Vector3.Lerp(startPosition, endPosition, percentageComplete);
+
+        // rotate toward rotation of target object
+        var step = 360;
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetDown.rotation, step);
+    }
     public void OnCollisionEnter2D(Collision2D collision)
     {
         
